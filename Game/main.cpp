@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <charconv>
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
@@ -22,8 +23,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//0.15f
 
 	initparam.isEnableDOF = true;
-	//initparam.standardFps = 25;
-	//initparam.limitFps = 25;
+	initparam.standardFps = 120;
+	initparam.limitFps = 120;
 	//initparam.shadowMapSetting = enON;
 
 	//シェーダー
@@ -51,8 +52,43 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//SetPhysicsDebugDrawMode(btIDebugDraw::DBG_DrawWireframe);
 
 	//デバッグ表示・入力、常時有効化
-	//SetIsDebugDraw(true);
-	//SetIsDebugInput(true);
+	SetIsDebugDraw(true);
+	SetIsDebugInput(true);
+
+	class TestGO :public IGameObject {
+
+	};
+
+	class TestGOFactry :public IGameObject {
+	public:
+		void Update()override {
+			if (GetKeyDown(VK_SPACE)) {
+				for (int i = 0; i < 100; i++) {
+					new TestGO;
+					num++;
+				}
+			}
+			if (GetKeyDown(VK_RETURN)) {
+				for (int i = 0; i < 10000; i++) {
+					new TestGO;
+					num++;
+				}
+			}
+		}
+		void PostRender()override {
+			wchar_t stg[256];
+			swprintf_s(stg, 256, L"%d", num);
+			//std::to_chars(std::begin(stg),std::end(stg),num);
+			font.Draw(stg, 0.5f);
+		}
+
+	private:
+		int num = 0;
+		CFont font;
+		//TestGO obj;
+	};
+
+	TestGOFactry test;
 
 	//ゲームループ。
 	GetEngine().RunGameLoop();
