@@ -23,8 +23,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//0.15f
 
 	initparam.isEnableDOF = true;
-	initparam.standardFps = 120;
-	initparam.limitFps = 120;
+	initparam.standardFps = 60;
+	initparam.limitFps = -1;
 	//initparam.shadowMapSetting = enON;
 
 	//シェーダー
@@ -34,6 +34,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	
 	//エンジン初期化
 	GetEngine().InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "究極混成体デスホトケ", initparam);	
+
+	GetEngine().SetUseFpsLimiter(false);
 
 	//DOF設定
 	GetGraphicsEngine().GetDOFRender().SetFocus(0.0f);
@@ -56,16 +58,40 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	SetIsDebugInput(true);
 
 	class TestGO :public IGameObject {
+	};
 
+	class TestGOII :public IGameObject {
+	public:
+		bool Start() override {
+			return true;
+		}
+		void PreLoopUpdate() override {
+		}
+		void PreUpdate() override {
+		}
+		void Update() override {
+		}
+		void PostUpdate()override {
+		}
+		void PostLoopUpdate()override {
+		}
+		void PostLoopPostUpdate()override {
+		}
+		void Pre3DRender(int num)override {
+		}
+		void HUDRender(int HUDNum)override {
+		}
+		void PostRender()override {
+		}
 	};
 
 	class TestGOFactry :public IGameObject {
 	public:
 		void Update()override {
 			if (GetKeyDown(VK_SPACE)) {
-				for (int i = 0; i < 100; i++) {
-					new TestGO;
-					num++;
+				for (int i = 0; i < 10000; i++) {
+					new TestGOII;
+					num2++;
 				}
 			}
 			if (GetKeyDown(VK_RETURN)) {
@@ -77,13 +103,15 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		}
 		void PostRender()override {
 			wchar_t stg[256];
-			swprintf_s(stg, 256, L"%d", num);
+			swprintf_s(stg, 256, L"TGO:%d \n"
+								 L"TGO2:%d",
+			num, num2);
 			//std::to_chars(std::begin(stg),std::end(stg),num);
 			font.Draw(stg, 0.5f);
 		}
 
 	private:
-		int num = 0;
+		int num = 0, num2 = 0;
 		CFont font;
 		//TestGO obj;
 	};
