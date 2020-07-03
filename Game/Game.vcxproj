@@ -195,7 +195,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalIncludeDirectories>.\Include;..\..\DemolisherWeapon/DemolisherWeapon/Photon/Photon-cpp/inc;..\..\DemolisherWeapon/DemolisherWeapon/Photon/LoadBalancing-cpp/inc;..\..\DemolisherWeapon/DemolisherWeapon/Photon/;..\..\DemolisherWeapon/DemolisherWeapon/Photon/Common-cpp/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <PreprocessorDefinitions>DW_DX12;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;DemolisherWeapon.lib;%(AdditionalDependencies)</AdditionalDependencies>
