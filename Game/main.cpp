@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <charconv>
+#include "DemolisherWeapon/DirectX12/DX12Test.h"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
@@ -121,4 +122,5 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームループ。
 	GetEngine().RunGameLoop();
 
+	DX12Test::DeleteIns();
 }
