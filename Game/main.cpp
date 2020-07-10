@@ -122,5 +122,5 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームループ。
 	GetEngine().RunGameLoop();
 
-	DX12Test::DeleteIns();
+	//DX12Test::DeleteIns();
 }
