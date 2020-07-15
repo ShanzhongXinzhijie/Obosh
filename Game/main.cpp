@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include <charconv>
-#include "DemolisherWeapon/DirectX12/DX12Test.h"
+#include "DemolisherWeapon/GraphicsAPI/DirectX12/DX12Test.h"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
