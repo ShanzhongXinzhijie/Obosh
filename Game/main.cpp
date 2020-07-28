@@ -65,8 +65,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	class TestGOFactry :public IGameObject {
 	public:
 		bool Start()override {
-			//m_sprite.Init(L"smoke.png"); 
-			//m_spriteDDS.Init(L"smoke.dds");
+			m_sprite.Init(L"smoke.png"); 
+			m_spriteDDS.Init(L"smoke.dds");
 			return true;
 		}
 		void Update()override {
@@ -105,7 +105,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		CSprite m_sprite, m_spriteDDS;
 	};
 
-	//TestGOFactry test;
+#ifdef DW_DX11
+	TestGOFactry test;
+#endif
 
 	//ゲームループ。
 	GetEngine().RunGameLoop();
