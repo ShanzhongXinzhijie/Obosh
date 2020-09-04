@@ -1,6 +1,6 @@
 #include "stdafx.h"
-#include <charconv>
-#include "DemolisherWeapon/GraphicsAPI/DirectX12/DX12Test.h"
+//#include <charconv>
+//#include "DemolisherWeapon/GraphicsAPI/DirectX12/DX12Test.h"
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
@@ -105,9 +105,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		CSprite m_sprite, m_spriteDDS;
 	};
 
-#ifdef DW_DX11
+//#ifdef DW_DX11
 	TestGOFactry test;
-#endif
+//#endif
 
 	//ゲームループ。
 	GetEngine().RunGameLoop();
