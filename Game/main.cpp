@@ -17,6 +17,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//initparam.screenHeight = initparam.frameBufferHeight = initparam.frameBufferHeight3D = 1080;
 
 	initparam.useFpsLimiter = false;
+	//initparam.limitFps = 15;
 	initparam.useVSync = false;
 	initparam.isWindowMode = true;
 
@@ -67,6 +68,23 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		bool Start()override {
 			m_sprite.Init(L"smoke.png"); 
 			m_spriteDDS.Init(L"smoke.dds");
+
+			m_model.Init(L"tettou.cmo");
+			//m_model.SetPos({ 0,1000,-800 });
+			m_modeltkm.Init(L"testNonSkin.tkm");
+			m_modeltkm.SetIsDrawBoundingBox(true);
+
+			for (auto& m : m_insM) {
+				m.Init(100, L"testNonSkin.tkm");
+				m.SetPos({ 100 - 200 * CMath::RandomZeroToOne(), 100 - 200 * CMath::RandomZeroToOne(), 100 - 200 * CMath::RandomZeroToOne() });
+			}
+
+			cpos = { 0,0,-200 };
+			ctar = m_cam.GetTarget();
+			m_cam.SetFar(100000);
+			m_cam.SetPos(cpos);
+			SetMainCamera(&m_cam);
+
 			return true;
 		}
 		void Update()override {
@@ -82,7 +100,27 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 					num++;
 				}
 			}
+
+			if (GetKeyInput('W')) {
+				cpos.z += 1.0f;
+				ctar.z += 1.0f;
+			}
+			if (GetKeyInput('S')) {
+				cpos.z -= 1.0f;
+				ctar.z -= 1.0f;
+			}
+			if (GetKeyInput('A')) {
+				cpos.y += 1.0f;
+				ctar.y += 1.0f;
+			}
+			if (GetKeyInput('D')) {
+				cpos.y -= 1.0f;
+				ctar.y -= 1.0f;
+			}
+			m_cam.SetPos(cpos);
+			m_cam.SetTarget(ctar);
 		}
+		/*
 		void PostRender()override {
 			wchar_t stg[256];
 			swprintf_s(stg, 256, L"TGO:%d \n"
@@ -94,6 +132,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 			m_sprite.Draw({ 0.0f,0.0f }, 0.05f, 0.0f, 0.0f, { 1.0f,1.0f ,1.0f ,1.0f });
 			m_spriteDDS.Draw({ 0.8f,0.0f }, 0.05f, 0.0f, 0.0f, { 1.0f,1.0f ,1.0f ,1.0f });
 		}
+		*/
 
 	private:
 		int num = 0, num2 = 0;
@@ -103,11 +142,16 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		//GetSpriteBatchPMAÇ∆GetSpriteBatchÇÃégÇ¢ï˚ãt?
 		//ãtÇ∂Ç·Ç»Ç¢Ç¡Ç€Ç¢
 		CSprite m_sprite, m_spriteDDS;
+
+		GameObj::CSkinModelRender m_model, m_modeltkm;
+		GameObj::CInstancingModelRender m_insM[100];
+		GameObj::PerspectiveCamera m_cam;
+		CVector3 cpos, ctar;
 	};
 
-//#ifdef DW_DX11
+#ifdef DW_DX11
 	TestGOFactry test;
-//#endif
+#endif
 
 	//ÉQÅ[ÉÄÉãÅ[ÉvÅB
 	GetEngine().RunGameLoop();
